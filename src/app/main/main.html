@@ -1,0 +1,19 @@
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-12">
+      <h1>Location Buddy</h1>
+      <p>You see the location of the Phone with around block-level accuracy. Follow it.</p>
+      <p>Last Update: {{lastUpdate}}</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+
+      <openlayers ol-center="openlayer.center" ol-defaults="openlayer.defaults" height="100%" width="100%">
+        <ol-marker ng-repeat="marker in markers" ol-marker-properties="marker"></ol-marker>
+
+      </openlayers>
+    </div>
+  </div>
+</div>
