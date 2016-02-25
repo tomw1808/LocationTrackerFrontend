@@ -6,8 +6,9 @@
     .controller('MainController', MainController);
 
   /** @ngInject */
-  function MainController($scope, $http, $timeout) {
+  function MainController($scope, $http, $timeout, $routeParams, $filter) {
     $scope.markers = [];
+
 
     $scope.lastUpdate = new Date();
     $scope.lastLocation = {};
@@ -28,7 +29,7 @@
 
     function updateMarkers() {
       $scope.lastUpdate = new Date();
-      $http.get('http://www.newscombinator.com/location/search/getlocationmarker').success(function(result) {
+      $http.get('http://www.newscombinator.com/location/search/getlocationmarker?id='+$routeParams["id"]).success(function(result) {
 
 
         $scope.markers = [];
@@ -37,7 +38,9 @@
             lat: Number(obj.latitude),
             lon: Number(obj.longitude)
           });
-          $scope.lastLocation = new Date(obj.created);
+          $scope.lastLocation = new Date($filter('mysqlDatetime')(obj.created));
+          console.log($scope.lastLocation);
+
         });
         if($scope.markers.length > 0) {
           $scope.openlayer.center.lat = $scope.markers[0].lat;
