@@ -12,6 +12,8 @@
 
     $scope.lastUpdate = new Date();
     $scope.lastLocation = {};
+    $scope.lastLocationObject = {test:1};
+    $scope.config = {zoom: true};
 
     $scope.openlayer = {
       defaults: {
@@ -34,15 +36,16 @@
 
         $scope.markers = [];
         angular.forEach(result, function(obj) {
+          $scope.lastLocationObject = obj;
           $scope.markers.push({
             lat: Number(obj.latitude),
             lon: Number(obj.longitude)
           });
           $scope.lastLocation = new Date($filter('mysqlDatetime')(obj.created));
-          console.log($scope.lastLocation);
+
 
         });
-        if($scope.markers.length > 0) {
+        if($scope.markers.length > 0 && $scope.config.zoom) {
           $scope.openlayer.center.lat = $scope.markers[0].lat;
           $scope.openlayer.center.lon = $scope.markers[0].lon;
           $scope.openlayer.center.projection = "EPSG:4326";
